@@ -98,7 +98,7 @@ const LandingPanaderia = () => {
       mensaje += `%0A*Observaciones:* ${encodeURIComponent(notes)}%0A`;
     }
 
-    mensaje += `%0A¿Podrían confirmarme la disponibilidad y el tiempo de entrega?`;
+    mensaje += `%0A¿Podrían confirmarme la disponibilidad y el tiempo de entrega? ... POR APERTURA DE SU NUEVA PANADERIA LA JAUJINA, TODOS SUS PEDIDOS SON GRATIS, SOLICITELO YA !!. GRACIAS.`;
     
     window.open(`https://wa.me/${whatsappNumber}?text=${mensaje}`, '_blank');
   };
