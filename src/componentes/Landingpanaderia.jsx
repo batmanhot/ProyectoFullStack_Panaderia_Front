@@ -87,7 +87,7 @@ const LandingPanaderia = () => {
 
   // Envío por WhatsApp
   const sendToWhatsApp = () => {
-    let mensaje = `*Nuevo Pedido - Panadería Tradición*%0A------------------------------%0A`;
+    let mensaje = `*Nuevo Pedido - Panaderia la Jaujina*%0A------------------------------%0A`;
     cart.forEach(item => {
       mensaje += `• ${item.qty}x ${item.nombre} - S/ ${(item.precio * item.qty).toFixed(2)}%0A`;
     });
@@ -124,7 +124,7 @@ const LandingPanaderia = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-orange-50 font-sans text-gray-800 relative">
+    <div className="min-h-screen bg-gradient-to-b from-white via-orange-50 to-white font-sans text-gray-800 relative">
       {/* Botón flotante WhatsApp */}
       <WhatsAppButton whatsappNumber={whatsappNumber} defaultMessage={defaultMessage} />
 
@@ -138,13 +138,15 @@ const LandingPanaderia = () => {
       <Hero />
 
       {/* Especialidades */}
-      <Especialidades 
-        menuData={menuData} 
-        onOpenMenu={(category) => {
-          setSelectedCategory(category);
-          setIsModalOpen(true);
-        }}
-      />
+      <div id="especialidades">
+        <Especialidades 
+          menuData={menuData} 
+          onOpenMenu={(category) => {
+            setSelectedCategory(category);
+            setIsModalOpen(true);
+          }}
+        />
+      </div>
 
       {/* Modal de Productos */}
       <ProductModal 
@@ -172,14 +174,18 @@ const LandingPanaderia = () => {
       />
 
       {/* FAQ */}
-      <FAQ 
-        faqs={faqs}
-        openFaq={openFaq}
-        onToggleFaq={(index) => setOpenFaq(openFaq === index ? null : index)}
-      />
+      <div id="faq">
+        <FAQ 
+          faqs={faqs}
+          openFaq={openFaq}
+          onToggleFaq={(index) => setOpenFaq(openFaq === index ? null : index)}
+        />
+      </div>
 
       {/* Contacto */}
-      <Contacto />
+      <div id="contacto">
+        <Contacto />
+      </div>
 
       {/* Footer */}
       <Footer />

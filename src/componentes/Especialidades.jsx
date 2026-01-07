@@ -8,13 +8,14 @@ const Especialidades = ({ menuData, onOpenMenu }) => {
   };
 
   return (
-    <section id="especialidades" className="py-20 px-6 max-w-7xl mx-auto">
-      <div className="text-center mb-16">
-        <h3 className="text-4xl font-bold text-gray-900 italic">Nuestras Especialidades</h3>
-        <p className="text-gray-600 mt-2 italic text-lg">Selecciona una categoría para ver precios</p>
-      </div>
+    <section id="especialidades" className="py-20 px-6 bg-gradient-to-b from-orange-50 via-yellow-50 to-orange-50">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h3 className="text-4xl font-bold text-orange-900 italic">Nuestras Especialidades</h3>
+          <p className="text-orange-700 mt-2 italic text-lg">Selecciona una categoría para ver precios</p>
+        </div>
 
-      <div className="grid md:grid-cols-3 gap-10">
+        <div className="grid md:grid-cols-3 gap-10">
         {Object.keys(menuData).map((category) => (
           <div 
             key={category} 
@@ -39,6 +40,7 @@ const Especialidades = ({ menuData, onOpenMenu }) => {
             </div>
           </div>
         ))}
+        </div>
       </div>
     </section>
   );

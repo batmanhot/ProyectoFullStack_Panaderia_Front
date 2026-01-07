@@ -2,11 +2,11 @@ import React from 'react';
 
 const FAQ = ({ faqs, openFaq, onToggleFaq }) => {
   return (
-    <section className="py-20 bg-white px-6">
+    <section className="py-20 bg-gradient-to-b from-white via-blue-50 to-white px-6">
       <div className="max-w-3xl mx-auto">
         <div className="text-center mb-12">
-          <h3 className="text-4xl font-bold text-gray-900 italic font-serif">Preguntas Frecuentes</h3>
-          <p className="text-gray-600 mt-2 italic">Todo lo que necesitas saber sobre nosotros</p>
+          <h3 className="text-4xl font-bold text-blue-900 italic font-serif">Preguntas Frecuentes</h3>
+          <p className="text-blue-700 mt-2 italic">Todo lo que necesitas saber sobre nosotros</p>
         </div>
 
         <div className="space-y-4">
