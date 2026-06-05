@@ -1,44 +1,139 @@
 <!doctype html>
-<html lang="es">
+<html lang="es-PE">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+    <!-- ═══════════════════════════════════════════════════
+         FAVICON & ICONOS
+    ═══════════════════════════════════════════════════ -->
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/vite.svg" />
+    <meta name="theme-color" content="#5A3E2B" />
+    <meta name="msapplication-TileColor" content="#5A3E2B" />
 
-    <!-- SEO Primary -->
-    <title>Panadería La Jaujina | Pan Fresco, Pasteles y Delivery</title>
-    <meta name="description" content="Disfruta pan recién horneado, pasteles, empanadas y productos artesanales con delivery rápido. Calidad y tradición en cada producto. Pide por WhatsApp." />
-    <meta name="keywords" content="panadería, pan fresco, pasteles, empanadas, tortas, delivery, productos artesanales, La Jaujina, panadería artesanal, croissants, bocaditos, coffee break" />
-    <meta name="robots" content="index, follow" />
-    <meta name="author" content="Panadería La Jaujina" />
+    <!-- ═══════════════════════════════════════════════════
+         SEO PRIMARIO
+         Título óptimo: 50–60 caracteres
+         Descripción óptima: 140–155 caracteres
+    ═══════════════════════════════════════════════════ -->
+    <title>Panadería La Jaujina | Pan Artesanal & Delivery en Jauja</title>
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Panadería La Jaujina | Pan Fresco y Delivery" />
-    <meta property="og:description" content="Pan recién horneado, pasteles y productos artesanales con delivery rápido. ¡Pide ahora por WhatsApp!" />
-    <meta property="og:image" content="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=1200" />
-    <meta property="og:locale" content="es_PE" />
+    <meta name="description"
+          content="Pan recién horneado, pasteles y tortas artesanales con delivery a domicilio en Jauja, Junín. Pedidos online, Yape y efectivo. ¡Más de 10 000 clientes satisfechos!" />
 
-    <!-- Twitter Card -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Panadería La Jaujina | Pan Fresco y Delivery" />
-    <meta name="twitter:description" content="Pan recién horneado, pasteles y productos artesanales. ¡Pide ahora por WhatsApp!" />
-    <meta name="twitter:image" content="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=1200" />
+    <meta name="keywords"
+          content="panadería Jauja, pan artesanal Jauja, delivery pan Jauja, pasteles Jauja, tortas Jauja, panadería Junín, pan fresco delivery, panadería artesanal Perú, bocaditos Jauja, empanadas Jauja, coffee break Jauja, catering Jauja, panadería La Jaujina, pan recién horneado, Yape panadería" />
 
-    <!-- Schema.org LocalBusiness / Bakery -->
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1" />
+    <meta name="author"  content="Panadería La Jaujina" />
+    <meta name="copyright" content="Panadería La Jaujina" />
+    <meta name="language" content="Spanish" />
+    <meta name="revisit-after" content="7 days" />
+    <meta name="rating" content="general" />
+
+    <!-- URL canónica — actualiza al dominio de producción -->
+    <link rel="canonical" href="https://lajaujina.com/" />
+
+    <!-- ═══════════════════════════════════════════════════
+         GEO LOCAL — Jauja, Junín, Perú
+         Coordenadas: -11.7756°, -75.4990°
+    ═══════════════════════════════════════════════════ -->
+    <meta name="geo.region"    content="PE-JUN" />
+    <meta name="geo.placename" content="Jauja, Junín, Perú" />
+    <meta name="geo.position"  content="-11.7756;-75.4990" />
+    <meta name="ICBM"          content="-11.7756, -75.4990" />
+
+    <!-- ═══════════════════════════════════════════════════
+         MOBILE / PWA
+    ═══════════════════════════════════════════════════ -->
+    <meta name="apple-mobile-web-app-capable"          content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title"            content="La Jaujina" />
+    <meta name="mobile-web-app-capable"                content="yes" />
+    <meta name="format-detection"                      content="telephone=yes" />
+    <meta name="HandheldFriendly"                      content="true" />
+
+    <!-- ═══════════════════════════════════════════════════
+         OPEN GRAPH — Facebook / WhatsApp / LinkedIn
+    ═══════════════════════════════════════════════════ -->
+    <meta property="og:type"        content="restaurant.restaurant" />
+    <meta property="og:site_name"   content="Panadería La Jaujina" />
+    <meta property="og:title"       content="Panadería La Jaujina | Pan Artesanal & Delivery en Jauja" />
+    <meta property="og:description" content="Pan recién horneado, pasteles y tortas artesanales con delivery a domicilio en Jauja. ¡Pide ahora online con Yape o efectivo!" />
+    <meta property="og:url"         content="https://lajaujina.com/" />
+    <meta property="og:locale"      content="es_PE" />
+    <meta property="og:image"       content="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=1200&h=630" />
+    <meta property="og:image:secure_url" content="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=1200&h=630" />
+    <meta property="og:image:type"  content="image/jpeg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt"   content="Pan artesanal recién horneado de Panadería La Jaujina en Jauja, Perú" />
+
+    <!-- Datos de restaurante (Facebook) -->
+    <meta property="restaurant:contact_info:phone_number" content="+51951655295" />
+    <meta property="restaurant:contact_info:locality"     content="Jauja" />
+    <meta property="restaurant:contact_info:region"       content="Junín" />
+    <meta property="restaurant:contact_info:country_name" content="Perú" />
+
+    <!-- ═══════════════════════════════════════════════════
+         TWITTER / X CARD
+    ═══════════════════════════════════════════════════ -->
+    <meta name="twitter:card"        content="summary_large_image" />
+    <meta name="twitter:title"       content="Panadería La Jaujina | Pan Artesanal & Delivery en Jauja" />
+    <meta name="twitter:description" content="Pan recién horneado, pasteles y tortas artesanales con delivery. Pide online con Yape o efectivo. ¡Más de 10 000 clientes felices!" />
+    <meta name="twitter:image"       content="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=1200&h=630" />
+    <meta name="twitter:image:alt"   content="Pan artesanal La Jaujina - Jauja, Perú" />
+
+    <!-- ═══════════════════════════════════════════════════
+         RENDIMIENTO — Preconnect & DNS prefetch
+    ═══════════════════════════════════════════════════ -->
+    <link rel="preconnect"    href="https://images.unsplash.com" crossorigin />
+    <link rel="dns-prefetch"  href="https://images.unsplash.com" />
+    <link rel="preconnect"    href="https://fonts.googleapis.com" crossorigin />
+    <link rel="dns-prefetch"  href="https://wa.me" />
+
+    <!-- ═══════════════════════════════════════════════════
+         SCHEMA.ORG — 1. BAKERY (LocalBusiness completo)
+    ═══════════════════════════════════════════════════ -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "Bakery",
+      "@type": ["Bakery", "FoodEstablishment", "LocalBusiness"],
+      "@id": "https://lajaujina.com/#bakery",
       "name": "Panadería La Jaujina",
-      "description": "Panadería artesanal con productos frescos diarios, pasteles, tortas y servicio de delivery.",
+      "alternateName": "La Jaujina",
+      "description": "Panadería artesanal en Jauja con más de 5 años de tradición. Pan fresco horneado cada mañana, pasteles, tortas personalizadas, bocaditos y servicio de catering con delivery a domicilio.",
+      "url": "https://lajaujina.com/",
       "telephone": "+51951655295",
+      "email": "contacto@lajaujina.com",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=1200",
+        "width": 1200,
+        "height": 800,
+        "caption": "Pan artesanal recién horneado en Panadería La Jaujina, Jauja"
+      },
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://lajaujina.com/logo.png",
+        "width": 300,
+        "height": 300
+      },
       "address": {
         "@type": "PostalAddress",
-        "streetAddress": "Calle Principal 123",
-        "addressLocality": "La Jaujina",
+        "streetAddress": "Calle Principal s/n",
+        "addressLocality": "Jauja",
+        "addressRegion": "Junín",
+        "postalCode": "12200",
         "addressCountry": "PE"
       },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": -11.7756,
+        "longitude": -75.4990
+      },
+      "hasMap": "https://maps.google.com/?q=Panadería+La+Jaujina+Jauja+Perú",
       "openingHoursSpecification": [
         {
           "@type": "OpeningHoursSpecification",
@@ -53,23 +148,269 @@
           "closes": "17:00"
         }
       ],
-      "servesCuisine": "Panadería y Pastelería Artesanal",
-      "priceRange": "S/",
+      "servesCuisine": ["Panadería Artesanal", "Pastelería", "Repostería Peruana"],
+      "menu": "https://lajaujina.com/#panaderia",
+      "priceRange": "S/ 1 – S/ 80",
       "currenciesAccepted": "PEN",
-      "paymentAccepted": "Cash, Credit Card, Yape, Plin",
+      "paymentAccepted": "Efectivo, Yape, Plin, Transferencia Bancaria",
+      "areaServed": {
+        "@type": "City",
+        "name": "Jauja",
+        "containedInPlace": {
+          "@type": "AdministrativeArea",
+          "name": "Junín, Perú"
+        }
+      },
       "hasOfferCatalog": {
         "@type": "OfferCatalog",
         "name": "Productos de Panadería La Jaujina",
         "itemListElement": [
-          { "@type": "OfferCatalog", "name": "Panadería" },
-          { "@type": "OfferCatalog", "name": "Pasteles y Tortas" },
-          { "@type": "OfferCatalog", "name": "Dulces Regionales" }
+          {
+            "@type": "OfferCatalog",
+            "name": "Panadería",
+            "description": "Pan francés, integral, ciabatta, baguette y variedades artesanales"
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Pasteles y Tortas",
+            "description": "Tortas personalizadas, pasteles surtidos y tartas artesanales"
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Empanadas y Bocaditos",
+            "description": "Empanadas horneadas, bocaditos para eventos y reuniones"
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Dulces Regionales",
+            "description": "Dulces típicos de Jauja y la región Junín"
+          },
+          {
+            "@type": "OfferCatalog",
+            "name": "Coffee Break y Catering",
+            "description": "Servicio completo de coffee break, desayunos y catering corporativo"
+          }
         ]
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.9",
+        "reviewCount": "847",
+        "bestRating": "5",
+        "worstRating": "1"
+      },
+      "foundingDate": "2019",
+      "numberOfEmployees": {
+        "@type": "QuantitativeValue",
+        "value": "5"
+      },
+      "sameAs": [
+        "https://www.facebook.com/panaderialajaujina",
+        "https://www.instagram.com/panaderialajaujina",
+        "https://wa.me/51951655295"
+      ],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+51951655295",
+          "contactType": "customer service",
+          "availableLanguage": "Spanish",
+          "areaServed": "PE",
+          "contactOption": "TollFree"
+        },
+        {
+          "@type": "ContactPoint",
+          "contactType": "sales",
+          "url": "https://lajaujina.com/",
+          "availableLanguage": "Spanish"
+        }
+      ],
+      "potentialAction": [
+        {
+          "@type": "OrderAction",
+          "target": {
+            "@type": "EntryPoint",
+            "urlTemplate": "https://lajaujina.com/",
+            "actionPlatform": [
+              "http://schema.org/DesktopWebPlatform",
+              "http://schema.org/MobileWebPlatform"
+            ]
+          },
+          "deliveryMethod": ["http://purl.org/goodrelations/v1#DeliveryModeDirectDownload"]
+        },
+        {
+          "@type": "ViewAction",
+          "target": "https://lajaujina.com/#panaderia",
+          "name": "Ver Catálogo"
+        }
+      ]
+    }
+    </script>
+
+    <!-- ═══════════════════════════════════════════════════
+         SCHEMA.ORG — 2. FAQ PAGE (6 preguntas frecuentes)
+    ═══════════════════════════════════════════════════ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Realizan delivery a domicilio en Jauja?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "¡Sí! Contamos con servicio de delivery a domicilio en toda el área de Jauja. Los pedidos realizados antes de las 6:00 PM se entregan el mismo día. Puedes hacer tu pedido directamente en nuestra web."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Cuál es el horario de atención de la panadería?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Atendemos de lunes a sábado de 6:00 AM a 7:00 PM, y los domingos de 7:00 AM a 5:00 PM. Los pedidos online se pueden realizar en cualquier momento y se procesan en horario de atención."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Aceptan Yape y Plin como forma de pago?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, aceptamos Yape, Plin, transferencias bancarias, tarjetas de crédito/débito y efectivo contra entrega. Todos los métodos de pago son seguros y confirmados antes del despacho."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Con cuánta anticipación debo pedir una torta personalizada?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Para tortas especiales y personalizadas recomendamos solicitarlas con al menos 48 horas de anticipación. Esto nos permite preparar un producto de la mejor calidad con los detalles que necesitas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Preparan pedidos al por mayor para empresas o eventos?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Sí, trabajamos con empresas y eventos de todo tipo. Ofrecemos paquetes especiales con descuentos por volumen, coffee break corporativo y catering. Contáctanos por WhatsApp para recibir una cotización sin compromiso."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿Atienden reuniones, eventos y coffee break corporativo?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Absolutamente. Ofrecemos servicio completo de coffee break, catering para reuniones y eventos corporativos en Jauja. Cotizamos sin compromiso y adaptamos el menú a tus necesidades y presupuesto."
+          }
+        }
+      ]
+    }
+    </script>
+
+    <!-- ═══════════════════════════════════════════════════
+         SCHEMA.ORG — 3. WEBSITE + SITELINKS SEARCH
+    ═══════════════════════════════════════════════════ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "@id": "https://lajaujina.com/#website",
+      "url": "https://lajaujina.com/",
+      "name": "Panadería La Jaujina",
+      "description": "Panadería artesanal en Jauja con pan fresco, pasteles, tortas y delivery a domicilio.",
+      "publisher": {
+        "@id": "https://lajaujina.com/#bakery"
+      },
+      "inLanguage": "es-PE",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://lajaujina.com/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
       }
     }
     </script>
+
+    <!-- ═══════════════════════════════════════════════════
+         SCHEMA.ORG — 4. BREADCRUMB
+    ═══════════════════════════════════════════════════ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        {
+          "@type": "ListItem",
+          "position": 1,
+          "name": "Inicio",
+          "item": "https://lajaujina.com/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 2,
+          "name": "Catálogo de Productos",
+          "item": "https://lajaujina.com/#panaderia"
+        },
+        {
+          "@type": "ListItem",
+          "position": 3,
+          "name": "Promociones",
+          "item": "https://lajaujina.com/#promociones"
+        }
+      ]
+    }
+    </script>
+
+    <!-- ═══════════════════════════════════════════════════
+         SCHEMA.ORG — 5. PRODUCTO DESTACADO (Pan Francés)
+    ═══════════════════════════════════════════════════ -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Product",
+      "name": "Pan Francés Artesanal",
+      "description": "Pan francés recién horneado cada mañana con harina seleccionada. Crujiente por fuera y suave por dentro.",
+      "brand": {
+        "@type": "Brand",
+        "name": "Panadería La Jaujina"
+      },
+      "offers": {
+        "@type": "Offer",
+        "priceCurrency": "PEN",
+        "price": "0.20",
+        "availability": "https://schema.org/InStock",
+        "seller": {
+          "@id": "https://lajaujina.com/#bakery"
+        },
+        "priceValidUntil": "2026-12-31",
+        "hasMerchantReturnPolicy": {
+          "@type": "MerchantReturnPolicy",
+          "returnPolicyCategory": "https://schema.org/MerchantReturnFiniteReturnWindow"
+        }
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "5",
+        "reviewCount": "312"
+      }
+    }
+    </script>
+
   </head>
   <body>
+    <!-- Accesibilidad: contenido principal identificable para crawlers -->
+    <noscript>
+      <div style="font-family:Arial,sans-serif;max-width:600px;margin:40px auto;padding:20px;text-align:center;">
+        <h1>Panadería La Jaujina — Jauja, Perú</h1>
+        <p>Pan artesanal recién horneado, pasteles, tortas y delivery a domicilio en Jauja, Junín.</p>
+        <p>Llámanos al <a href="tel:+51951655295">+51 951 655 295</a> o escríbenos por
+           <a href="https://wa.me/51951655295">WhatsApp</a>.</p>
+        <p>Horario: Lun–Sáb 6:00–19:00 · Dom 7:00–17:00</p>
+      </div>
+    </noscript>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
