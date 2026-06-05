@@ -22,9 +22,7 @@ import AdminLogin from './AdminLogin';
 import AdminPanel from './AdminPanel';
 import CustomerLogin from './CustomerLogin';
 import CustomerOrders from './CustomerOrders';
-import { saveOrder, generateOrderId } from '../utils/orderStorage';
-import { getProducts } from '../utils/productStorage';
-import { getSettings } from '../utils/settingsStorage';
+import { orderService, productService, settingsService } from '../services';
 
 const LandingPanaderia = () => {
   /* ── Carrito ──────────────────────────────────────── */
@@ -44,17 +42,33 @@ const LandingPanaderia = () => {
   const [showCustomerLogin,  setShowCustomerLogin]  = useState(false);
   const [showCustomerOrders, setShowCustomerOrders] = useState(false);
 
-  /* ── Datos desde localStorage ─────────────────────── */
-  const [storedProducts, setStoredProducts] = useState(() => getProducts());
-  const [settings,       setSettings]       = useState(() => getSettings());
+  /* ── Datos remotos / localStorage ────────────────── */
+  const [storedProducts, setStoredProducts] = useState({});
+  const [settings,       setSettings]       = useState(null);
+
+  /* Carga inicial */
+  useEffect(() => {
+    productService.getProducts().then(setStoredProducts);
+    settingsService.getSettings().then(setSettings);
+  }, []);
 
   /* Refrescar cuando el admin cierra sesión */
   useEffect(() => {
     if (!isAdminLoggedIn) {
-      setStoredProducts(getProducts());
-      setSettings(getSettings());
+      productService.getProducts().then(setStoredProducts);
+      settingsService.getSettings().then(setSettings);
     }
   }, [isAdminLoggedIn]);
+
+  /* Espera la carga inicial de settings antes de renderizar */
+  if (!settings) return (
+    <div className="min-h-screen bg-[#FFF8F0] flex items-center justify-center">
+      <div className="text-center">
+        <div className="w-12 h-12 border-4 border-orange-600 border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+        <p className="text-[#5A3E2B] font-medium text-sm">Cargando...</p>
+      </div>
+    </div>
+  );
 
   /* menuData: solo productos activos */
   const menuData = Object.fromEntries(
@@ -63,7 +77,7 @@ const LandingPanaderia = () => {
       .filter(([, prods]) => prods.length > 0)
   );
 
-  const whatsappNumber = settings.whatsappNumber || '51951655295';
+  const whatsappNumber = settings.whatsappNumber || '';
   const defaultMessage = encodeURIComponent('¡Hola! Me gustaría realizar una consulta sobre sus productos.');
   const isLoggedIn     = !!loggedInCustomer;
 
@@ -94,16 +108,15 @@ const LandingPanaderia = () => {
   const totalCart = cart.reduce((acc, i) => acc + i.precio * i.qty, 0);
 
   /* ── Confirmar pedido ─────────────────────────────── */
-  const handleConfirmOrder = ({ paymentMethod, yapeCode, customer }) => {
-    const order = {
-      id:        generateOrderId(),
+  const handleConfirmOrder = async ({ paymentMethod, yapeCode, customer }) => {
+    const draft = {
+      id:        orderService.generateId(), // el backend genera el suyo; en local es el ID real
       timestamp: new Date().toISOString(),
       status:    'recepcionado',
       customer: {
         nombre:     customer.nombre,
         direccion:  customer.direccion,
         referencia: customer.referencia,
-        /* Vinculación con la cuenta del cliente */
         ...(loggedInCustomer && {
           telefono: loggedInCustomer.telefono,
           email:    loggedInCustomer.email,
@@ -119,12 +132,16 @@ const LandingPanaderia = () => {
       ],
     };
 
-    saveOrder(order);
-
-    setCart([]);
-    setNotes('');
-    setIsCartOpen(false);
-    setCurrentTicket(order);
+    try {
+      const saved = await orderService.createOrder(draft);
+      setCart([]);
+      setNotes('');
+      setIsCartOpen(false);
+      setCurrentTicket(saved); // usa el objeto devuelto (con ID real del backend si aplica)
+    } catch (err) {
+      console.error('Error creando pedido:', err);
+      // El carrito NO se limpia — el usuario puede reintentar
+    }
   };
 
   /* ── Navegación cliente ───────────────────────────── */

@@ -2,29 +2,23 @@ import React, { useState } from 'react';
 import { X, CheckCircle, MessageCircle, FileDown, Download } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
-
-const STATUS_LABELS = {
-  recepcionado:   'Recepcionado',
-  en_preparacion: 'En Preparación',
-  en_camino:      'En Camino',
-  entregado:      'Entregado',
-  cancelado:      'Cancelado',
-  pago_rechazado: 'Pago Rechazado',
-};
+import { STATUS_LABELS } from '../constants/orderStatuses';
+import { esc, currency, formatDate, formatTime } from '../utils/format';
 
 const OrderTicket = ({ order, onClose, whatsappNumber }) => {
   const [pdfPreview, setPdfPreview] = useState(null); // { dataUrl, width, height }
   const [generating, setGenerating] = useState(false);
+  const [pdfError,   setPdfError]   = useState('');
 
   if (!order) return null;
 
-  const date    = new Date(order.timestamp);
-  const dateStr = date.toLocaleDateString('es-PE', { year: 'numeric', month: 'long', day: 'numeric' });
-  const timeStr = date.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' });
+  const dateStr = formatDate(order.timestamp, { month: 'long' });
+  const timeStr = formatTime(order.timestamp);
 
   /* ── WhatsApp ──────────────────────────────────────── */
   const handleSendWhatsApp = () => {
-    const number    = whatsappNumber || '51951655295';
+    const number    = whatsappNumber || '';
+    if (!number) return;
     const formaPago = order.paymentMethod === 'efectivo' ? 'Efectivo contra Entrega' : 'Yape';
     let msg = `*Pedido Confirmado - Panadería La Jaujina*%0A`;
     msg += `*N° Pedido: ${order.id}*%0A`;
@@ -36,10 +30,10 @@ const OrderTicket = ({ order, onClose, whatsappNumber }) => {
     msg += `———————————————%0A`;
     msg += `*PRODUCTOS*%0A`;
     order.items.forEach((i) => {
-      msg += `• ${i.qty}x ${i.nombre} — S/ ${(i.precio * i.qty).toFixed(2)}%0A`;
+      msg += `• ${i.qty}x ${i.nombre} — ${currency(i.precio * i.qty)}%0A`;
     });
     msg += `———————————————%0A`;
-    msg += `*TOTAL: S/ ${order.total.toFixed(2)}*%0A`;
+    msg += `*TOTAL: ${currency(order.total)}*%0A`;
     msg += `*Pago: ${formaPago}*%0A`;
     if (order.yapeCode) msg += `*Código Yape: ${order.yapeCode}*%0A`;
     if (order.notes)    msg += `%0A📝 Obs: ${encodeURIComponent(order.notes)}%0A`;
@@ -48,68 +42,64 @@ const OrderTicket = ({ order, onClose, whatsappNumber }) => {
   };
 
   /* ── HTML con inline styles para captura limpia ────── */
+  /* IMPORTANTE: usar esc() en todo dato de usuario para evitar XSS vía innerHTML */
   const buildTicketHtml = () => {
     const formaPago = order.paymentMethod === 'efectivo' ? 'Efectivo contra Entrega' : 'Yape';
     return `
       <div style="font-family:Georgia,serif;padding:28px 24px;background:#ffffff;width:360px;box-sizing:border-box;">
 
-        <!-- Branding -->
         <div style="text-align:center;border-bottom:2px dashed #e5e7eb;padding-bottom:16px;margin-bottom:16px;">
           <div style="color:#92400e;font-size:20px;font-style:italic;font-weight:800;margin:0 0 3px;">Panadería La Jaujina</div>
           <div style="color:#9ca3af;font-size:11px;margin:0 0 12px;">Productos Artesanales Frescos</div>
           <div style="background:#ffedd5;display:inline-block;padding:5px 20px;border-radius:20px;">
-            <span style="color:#c2410c;font-weight:800;letter-spacing:2px;font-size:13px;">${order.id}</span>
+            <span style="color:#c2410c;font-weight:800;letter-spacing:2px;font-size:13px;">${esc(order.id)}</span>
           </div>
-          <div style="color:#9ca3af;font-size:11px;margin-top:8px;">${dateStr} · ${timeStr}</div>
+          <div style="color:#9ca3af;font-size:11px;margin-top:8px;">${esc(dateStr)} · ${esc(timeStr)}</div>
         </div>
 
-        <!-- Datos de entrega -->
         <div style="background:#fff7ed;border-radius:12px;padding:12px 16px;margin-bottom:16px;">
           <div style="color:#b45309;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Datos de Entrega</div>
-          <div style="font-weight:800;color:#1f2937;margin-bottom:4px;">${order.customer.nombre}</div>
-          <div style="color:#4b5563;font-size:13px;margin-bottom:2px;">📍 ${order.customer.direccion}</div>
-          ${order.customer.referencia ? `<div style="color:#9ca3af;font-size:11px;">🔖 Ref: ${order.customer.referencia}</div>` : ''}
+          <div style="font-weight:800;color:#1f2937;margin-bottom:4px;">${esc(order.customer.nombre)}</div>
+          <div style="color:#4b5563;font-size:13px;margin-bottom:2px;">📍 ${esc(order.customer.direccion)}</div>
+          ${order.customer.referencia ? `<div style="color:#9ca3af;font-size:11px;">🔖 Ref: ${esc(order.customer.referencia)}</div>` : ''}
         </div>
 
-        <!-- Productos -->
         <div style="margin-bottom:16px;">
           <div style="color:#9ca3af;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">Productos</div>
           ${order.items.map(item => `
             <div style="display:flex;justify-content:space-between;margin-bottom:5px;">
-              <span style="color:#4b5563;font-size:13px;"><strong style="color:#1f2937;">${item.qty}x</strong> ${item.nombre}</span>
-              <span style="font-weight:700;color:#1f2937;font-size:13px;">S/ ${(item.precio * item.qty).toFixed(2)}</span>
+              <span style="color:#4b5563;font-size:13px;"><strong style="color:#1f2937;">${item.qty}x</strong> ${esc(item.nombre)}</span>
+              <span style="font-weight:700;color:#1f2937;font-size:13px;">${currency(item.precio * item.qty)}</span>
             </div>
           `).join('')}
         </div>
 
-        <!-- Totales -->
         <div style="border-top:2px dashed #e5e7eb;padding-top:12px;margin-bottom:14px;">
           <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
             <span style="font-weight:700;color:#4b5563;">Total</span>
-            <span style="font-size:22px;font-weight:800;color:#c2410c;">S/ ${order.total.toFixed(2)}</span>
+            <span style="font-size:22px;font-weight:800;color:#c2410c;">${currency(order.total)}</span>
           </div>
           <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
             <span style="color:#9ca3af;font-size:13px;">Forma de pago</span>
-            <span style="font-weight:600;color:#374151;font-size:13px;">${formaPago}</span>
+            <span style="font-weight:600;color:#374151;font-size:13px;">${esc(formaPago)}</span>
           </div>
           ${order.yapeCode ? `
             <div style="display:flex;justify-content:space-between;">
               <span style="color:#9ca3af;font-size:13px;">Código Yape</span>
-              <span style="font-weight:700;color:#7c3aed;font-family:monospace;font-size:13px;">${order.yapeCode}</span>
+              <span style="font-weight:700;color:#7c3aed;font-family:monospace;font-size:13px;">${esc(order.yapeCode)}</span>
             </div>
           ` : ''}
         </div>
 
         ${order.notes ? `
           <div style="background:#f9fafb;border-radius:10px;padding:10px 12px;margin-bottom:14px;font-size:11px;color:#6b7280;font-style:italic;">
-            📝 ${order.notes}
+            📝 ${esc(order.notes)}
           </div>
         ` : ''}
 
-        <!-- Estado -->
         <div style="text-align:center;border-top:1px dashed #e5e7eb;padding-top:12px;">
           <div style="background:#dbeafe;display:inline-block;padding:5px 20px;border-radius:20px;">
-            <span style="color:#1d4ed8;font-weight:700;font-size:13px;">✅ ${STATUS_LABELS[order.status] || order.status}</span>
+            <span style="color:#1d4ed8;font-weight:700;font-size:13px;">✅ ${STATUS_LABELS[order.status] || esc(order.status)}</span>
           </div>
           <div style="color:#d1d5db;font-size:11px;margin-top:8px;">¡Gracias por tu compra! · Panadería La Jaujina</div>
         </div>
@@ -121,8 +111,8 @@ const OrderTicket = ({ order, onClose, whatsappNumber }) => {
   /* ── Generar vista previa PDF ──────────────────────── */
   const handlePreviewPdf = async () => {
     setGenerating(true);
+    setPdfError('');
     try {
-      /* Nodo temporal fuera de la pantalla */
       const wrapper = document.createElement('div');
       wrapper.style.cssText = 'position:fixed;top:-20000px;left:-20000px;';
       wrapper.innerHTML = buildTicketHtml();
@@ -144,6 +134,7 @@ const OrderTicket = ({ order, onClose, whatsappNumber }) => {
       });
     } catch (err) {
       console.error('PDF error:', err);
+      setPdfError('No se pudo generar el PDF. Intenta de nuevo.');
     } finally {
       setGenerating(false);
     }
@@ -212,11 +203,11 @@ const OrderTicket = ({ order, onClose, whatsappNumber }) => {
                 <p className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Productos</p>
                 <div className="space-y-1.5">
                   {order.items.map((item, i) => (
-                    <div key={i} className="flex justify-between text-sm">
+                    <div key={item.id ?? i} className="flex justify-between text-sm">
                       <span className="text-gray-600">
                         <span className="font-bold text-gray-800">{item.qty}x</span> {item.nombre}
                       </span>
-                      <span className="font-bold text-gray-800">S/ {(item.precio * item.qty).toFixed(2)}</span>
+                      <span className="font-bold text-gray-800">{currency(item.precio * item.qty)}</span>
                     </div>
                   ))}
                 </div>
@@ -226,7 +217,7 @@ const OrderTicket = ({ order, onClose, whatsappNumber }) => {
               <div className="border-t-2 border-dashed border-gray-200 pt-3 space-y-1.5">
                 <div className="flex justify-between items-center">
                   <span className="font-bold text-gray-600">Total</span>
-                  <span className="text-2xl font-extrabold text-orange-700">S/ {order.total.toFixed(2)}</span>
+                  <span className="text-2xl font-extrabold text-orange-700">{currency(order.total)}</span>
                 </div>
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-400">Forma de pago</span>
@@ -264,7 +255,8 @@ const OrderTicket = ({ order, onClose, whatsappNumber }) => {
           <div className="px-6 pb-6 pt-2 space-y-3">
             <button
               onClick={handleSendWhatsApp}
-              className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 text-white font-bold py-3 rounded-2xl transition active:scale-95 shadow"
+              disabled={!whatsappNumber}
+              className="w-full flex items-center justify-center gap-2 bg-green-600 hover:bg-green-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-3 rounded-2xl transition active:scale-95 shadow"
             >
               <MessageCircle size={18} />
               Reenviar Confirmación
@@ -291,6 +283,10 @@ const OrderTicket = ({ order, onClose, whatsappNumber }) => {
                 Cerrar
               </button>
             </div>
+
+            {pdfError && (
+              <p className="text-center text-xs text-red-500">{pdfError}</p>
+            )}
           </div>
         </div>
       </div>

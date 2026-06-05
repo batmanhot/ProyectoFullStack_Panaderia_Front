@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { X, User, Mail, Lock, Eye, EyeOff, Phone, ShoppingBag, UserPlus, LogIn } from 'lucide-react';
-import { register, login } from '../utils/customerStorage';
+import { authService } from '../services';
 
 const CustomerLogin = ({ onSuccess, onClose }) => {
   const [mode,    setMode]    = useState('login'); // 'login' | 'register'
@@ -13,38 +13,50 @@ const CustomerLogin = ({ onSuccess, onClose }) => {
   const [loginPass,  setLoginPass]  = useState('');
 
   /* Register fields */
-  const [regNombre,   setRegNombre]   = useState('');
-  const [regEmail,    setRegEmail]    = useState('');
-  const [regTel,      setRegTel]      = useState('');
-  const [regPass,     setRegPass]     = useState('');
-  const [regPass2,    setRegPass2]    = useState('');
+  const [regNombre,  setRegNombre]  = useState('');
+  const [regEmail,   setRegEmail]   = useState('');
+  const [regTel,     setRegTel]     = useState('');
+  const [regPass,    setRegPass]    = useState('');
+  const [regPass2,   setRegPass2]   = useState('');
 
-  const clear = () => { setError(''); };
+  const clear = () => setError('');
 
   /* ── Iniciar Sesión ── */
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     if (!loginEmail || !loginPass) return setError('Completa todos los campos.');
     setLoading(true);
-    setTimeout(() => {
-      const customer = login(loginEmail, loginPass);
-      if (customer) { onSuccess(customer); }
-      else { setError('Correo o contraseña incorrectos.'); }
+    try {
+      const customer = await authService.customerLogin(loginEmail, loginPass);
+      if (customer) {
+        onSuccess(customer);
+      } else {
+        setError('Correo o contraseña incorrectos.');
+      }
+    } catch {
+      setError('Error de conexión. Intenta de nuevo.');
+    } finally {
       setLoading(false);
-    }, 350);
+    }
   };
 
   /* ── Crear Cuenta ── */
-  const handleRegister = (e) => {
+  const handleRegister = async (e) => {
     e.preventDefault();
     if (regPass !== regPass2) return setError('Las contraseñas no coinciden.');
     setLoading(true);
-    setTimeout(() => {
-      const result = register(regNombre, regEmail, regTel, regPass);
-      if (result && !result.error) { onSuccess(result); }
-      else { setError(result?.error || 'Error al crear la cuenta.'); }
+    try {
+      const result = await authService.customerRegister(regNombre, regEmail, regTel, regPass);
+      if (result && !result.error) {
+        onSuccess(result);
+      } else {
+        setError(result?.error || 'Error al crear la cuenta.');
+      }
+    } catch {
+      setError('Error de conexión. Intenta de nuevo.');
+    } finally {
       setLoading(false);
-    }, 350);
+    }
   };
 
   const inputCls = 'w-full border-2 border-gray-200 focus:border-orange-400 rounded-2xl px-4 py-3 outline-none transition text-sm text-gray-800 bg-white placeholder:text-gray-300';

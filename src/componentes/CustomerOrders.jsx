@@ -4,7 +4,9 @@ import {
   ChevronDown, ChevronUp, ShoppingBag, User, Printer,
   XCircle, ShieldX,
 } from 'lucide-react';
-import { getOrders } from '../utils/orderStorage';
+import { orderService } from '../services';
+import { STATUS_FLOW as FLOW, TERMINAL_NEG as TERMINAL_NEGATIVE } from '../constants/orderStatuses';
+import { currency } from '../utils/format';
 import OrderTicket from './OrderTicket';
 
 /* ── Config estados ───────────────────────────────────── */
@@ -17,8 +19,6 @@ const STATUS = {
   pago_rechazado: { label: 'Pago Rechazado', emoji: '🚫', dot: 'bg-rose-600',   badge: 'bg-rose-100 text-rose-700',     Icon: ShieldX      },
 };
 
-const TERMINAL_NEGATIVE = ['cancelado', 'pago_rechazado'];
-const FLOW = ['recepcionado', 'en_preparacion', 'en_camino', 'entregado'];
 const STEP_SHORT = { recepcionado: 'Recibido', en_preparacion: 'Preparando', en_camino: 'En Camino', entregado: 'Entregado' };
 
 /* ── Panel principal del cliente ─────────────────────── */
@@ -29,12 +29,14 @@ const CustomerOrders = ({ customer, onClose, onLogout }) => {
   const [ticketOrder,  setTicketOrder]  = useState(null);
   const [lastRefresh,  setLastRefresh]  = useState(new Date());
 
-  const loadOrders = useCallback(() => {
-    const all  = getOrders();
-    const mine = all.filter((o) => o.customer?.telefono === customer.telefono ||
-                                   o.customer?.email     === customer.email);
-    setOrders(mine);
-    setLastRefresh(new Date());
+  const loadOrders = useCallback(async () => {
+    try {
+      const mine = await orderService.getMyOrders(customer.telefono, customer.email);
+      setOrders(mine);
+      setLastRefresh(new Date());
+    } catch (err) {
+      console.error('Error cargando pedidos:', err);
+    }
   }, [customer.telefono, customer.email]);
 
   useEffect(() => {
@@ -195,7 +197,7 @@ const CustomerOrderCard = ({ order, isExpanded, onToggle, onViewTicket }) => {
             </span>
           </div>
           <p className="text-gray-400 text-xs mt-0.5 truncate">
-            {dateStr} · {timeStr} · <span className="font-bold text-gray-600">S/ {order.total.toFixed(2)}</span>
+            {dateStr} · {timeStr} · <span className="font-bold text-gray-600">{currency(order.total)}</span>
           </p>
         </div>
         {isExpanded
@@ -278,13 +280,13 @@ const CustomerOrderCard = ({ order, isExpanded, onToggle, onViewTicket }) => {
               {order.items.map((item, i) => (
                 <div key={i} className="flex justify-between text-sm">
                   <span className="text-gray-600"><span className="font-bold text-gray-800">{item.qty}×</span> {item.nombre}</span>
-                  <span className="font-bold text-gray-800">S/ {(item.precio * item.qty).toFixed(2)}</span>
+                  <span className="font-bold text-gray-800">{currency(item.precio * item.qty)}</span>
                 </div>
               ))}
             </div>
             <div className="border-t border-gray-100 mt-2.5 pt-2 flex justify-between font-extrabold text-sm">
               <span className="text-gray-600">Total pagado</span>
-              <span className="text-orange-700 text-base">S/ {order.total.toFixed(2)}</span>
+              <span className="text-orange-700 text-base">{currency(order.total)}</span>
             </div>
           </div>
 

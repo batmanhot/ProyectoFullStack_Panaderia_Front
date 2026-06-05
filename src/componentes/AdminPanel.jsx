@@ -5,7 +5,9 @@ import {
   User, Banknote, Smartphone, ClipboardList, History,
   ShoppingBag, Settings, XCircle, ShieldX, AlertTriangle,
 } from 'lucide-react';
-import { getOrders, updateOrderStatus } from '../utils/orderStorage';
+import { orderService } from '../services';
+import { STATUS_FLOW, TERMINAL_NEG } from '../constants/orderStatuses';
+import { currency } from '../utils/format';
 import AdminProductsTab from './AdminProductsTab';
 import AdminSettingsTab from './AdminSettingsTab';
 
@@ -18,8 +20,6 @@ const STATUS = {
   cancelado:      { label: 'Cancelado',      color: 'bg-red-100 text-red-700 border-red-300',         dot: 'bg-red-500',    Icon: XCircle      },
   pago_rechazado: { label: 'Pago Rechazado', color: 'bg-rose-100 text-rose-700 border-rose-300',      dot: 'bg-rose-600',   Icon: ShieldX      },
 };
-const STATUS_FLOW    = ['recepcionado', 'en_preparacion', 'en_camino', 'entregado'];
-const TERMINAL_NEG   = ['cancelado', 'pago_rechazado'];
 
 const TABS = [
   { key: 'pedidos',       label: 'Pedidos',       Icon: Package      },
@@ -35,7 +35,14 @@ const AdminPanel = ({ onLogout }) => {
   const [search,      setSearch]      = useState('');
   const [expandedId,  setExpandedId]  = useState(null);
 
-  const loadOrders = useCallback(() => setOrders(getOrders()), []);
+  const loadOrders = useCallback(async () => {
+    try {
+      const data = await orderService.getOrders();
+      setOrders(data);
+    } catch (err) {
+      console.error('Error cargando pedidos:', err);
+    }
+  }, []);
 
   useEffect(() => {
     loadOrders();
@@ -43,8 +50,13 @@ const AdminPanel = ({ onLogout }) => {
     return () => clearInterval(t);
   }, [loadOrders]);
 
-  const handleStatusChange = (orderId, newStatus) => {
-    setOrders(updateOrderStatus(orderId, newStatus));
+  const handleStatusChange = async (orderId, newStatus) => {
+    try {
+      const updated = await orderService.updateStatus(orderId, newStatus);
+      setOrders(updated);
+    } catch (err) {
+      console.error('Error actualizando estado:', err);
+    }
   };
 
   const filtered = orders.filter((o) => {
@@ -253,7 +265,7 @@ const OrderCard = ({ order, isExpanded, onToggle, onStatusChange }) => {
           </div>
         </div>
         <div className="flex items-center gap-4 shrink-0 ml-2">
-          <span className="text-lg font-extrabold text-orange-700">S/ {order.total.toFixed(2)}</span>
+          <span className="text-lg font-extrabold text-orange-700">{currency(order.total)}</span>
           {isExpanded ? <ChevronUp size={18} className="text-gray-400" /> : <ChevronDown size={18} className="text-gray-400" />}
         </div>
       </button>
@@ -348,13 +360,13 @@ const OrderCard = ({ order, isExpanded, onToggle, onStatusChange }) => {
                     <span className="text-gray-600">
                       <span className="font-bold text-gray-800">{item.qty}x</span> {item.nombre}
                     </span>
-                    <span className="font-bold text-gray-800">S/ {(item.precio * item.qty).toFixed(2)}</span>
+                    <span className="font-bold text-gray-800">{currency(item.precio * item.qty)}</span>
                   </div>
                 ))}
               </div>
               <div className="border-t border-gray-100 mt-3 pt-2 flex justify-between font-extrabold">
                 <span className="text-gray-600">Total</span>
-                <span className="text-orange-700">S/ {order.total.toFixed(2)}</span>
+                <span className="text-orange-700">{currency(order.total)}</span>
               </div>
             </div>
           </div>

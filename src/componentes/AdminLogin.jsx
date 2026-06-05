@@ -1,30 +1,35 @@
 import React, { useState } from 'react';
 import { Lock, Eye, EyeOff, X, ShieldCheck } from 'lucide-react';
-
-const ADMIN_PASSWORD = 'jaujina2026';
+import { authService } from '../services';
 
 const AdminLogin = ({ onSuccess, onClose }) => {
   const [password, setPassword] = useState('');
-  const [showPwd, setShowPwd] = useState(false);
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [showPwd,  setShowPwd]  = useState(false);
+  const [error,    setError]    = useState('');
+  const [loading,  setLoading]  = useState(false);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    setTimeout(() => {
-      if (password === ADMIN_PASSWORD) {
+    setError('');
+    try {
+      const ok = await authService.adminLogin(password);
+      if (ok) {
         onSuccess();
       } else {
         setError('Contraseña incorrecta. Inténtalo nuevamente.');
         setPassword('');
       }
+    } catch {
+      setError('Error de conexión. Verifica tu red e intenta de nuevo.');
+      setPassword('');
+    } finally {
       setLoading(false);
-    }, 400);
+    }
   };
 
   return (
-    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
+    <div className="fixed inset-0 z-200 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
       <div className="bg-white w-full max-w-sm rounded-3xl shadow-2xl overflow-hidden animate-in zoom-in duration-200">
 
         {/* Header */}

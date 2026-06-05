@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Save, CheckCircle, Phone, Store } from 'lucide-react';
-import { getSettings, saveSettings } from '../utils/settingsStorage';
+import { settingsService } from '../services';
 
 const SECTION_LABELS = {
   estadisticas: '📊 Estadísticas',
@@ -25,17 +25,29 @@ const Toggle = ({ on, onChange }) => (
 );
 
 const AdminSettingsTab = () => {
-  const [settings, setSettings] = useState(() => getSettings());
+  const [settings, setSettings] = useState(null);
   const [saved,    setSaved]    = useState(false);
+
+  useEffect(() => {
+    settingsService.getSettings()
+      .then(setSettings)
+      .catch((err) => console.error('Error cargando configuración:', err));
+  }, []);
 
   const setSections = (key) =>
     setSettings((s) => ({ ...s, sections: { ...s.sections, [key]: !s.sections[key] } }));
 
-  const handleSave = () => {
-    saveSettings(settings);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
+  const handleSave = async () => {
+    try {
+      await settingsService.saveSettings(settings);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2500);
+    } catch (err) {
+      console.error('Error guardando configuración:', err);
+    }
   };
+
+  if (!settings) return null;
 
   const visibleCount = Object.values(settings.sections).filter(Boolean).length;
 
@@ -58,7 +70,7 @@ const AdminSettingsTab = () => {
             />
           </div>
           <div>
-            <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5 block flex items-center gap-1">
+            <label className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1.5 flex items-center gap-1">
               <Phone size={11} /> Número de WhatsApp
             </label>
             <div className="flex items-center gap-2">

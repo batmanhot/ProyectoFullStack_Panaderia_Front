@@ -1,23 +1,31 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Plus, Edit2, Trash2, Check, X as XIcon,
   ToggleLeft, ToggleRight, PlusCircle, RotateCcw, Package,
 } from 'lucide-react';
-import {
-  getProducts, addProduct, updateProduct, deleteProduct, addCategory, resetToDefaults,
-} from '../utils/productStorage';
+import { productService } from '../services';
 
 const EMPTY_FORM = { nombre: '', precio: '', desc: '' };
 
 const AdminProductsTab = () => {
-  const [products,      setProducts]      = useState(() => getProducts());
-  const [activecat,     setActivecat]     = useState(() => Object.keys(getProducts())[0] || '');
+  const [products,      setProducts]      = useState({});
+  const [activecat,     setActivecat]     = useState('');
   const [editingId,     setEditingId]     = useState(null);
   const [editForm,      setEditForm]      = useState(EMPTY_FORM);
   const [showAddForm,   setShowAddForm]   = useState(false);
   const [addForm,       setAddForm]       = useState(EMPTY_FORM);
   const [showNewCat,    setShowNewCat]    = useState(false);
   const [newCatName,    setNewCatName]    = useState('');
+
+  /* Carga inicial */
+  useEffect(() => {
+    productService.getProducts()
+      .then((data) => {
+        setProducts(data);
+        setActivecat((prev) => prev || Object.keys(data)[0] || '');
+      })
+      .catch((err) => console.error('Error cargando productos:', err));
+  }, []);
 
   const categories       = Object.keys(products);
   const currentProducts  = products[activecat] || [];
@@ -29,7 +37,11 @@ const AdminProductsTab = () => {
     if (!updated[activecat]) setActivecat(Object.keys(updated)[0] || '');
   };
 
-  const toggleActive = (id, current) => reload(updateProduct(activecat, id, { activo: !current }));
+  const toggleActive = async (id, current) => {
+    try {
+      reload(await productService.updateProduct(activecat, id, { activo: !current }));
+    } catch (err) { console.error('Error actualizando producto:', err); }
+  };
 
   const startEdit = (p) => {
     setEditingId(p.id);
@@ -37,41 +49,51 @@ const AdminProductsTab = () => {
     setShowAddForm(false);
   };
 
-  const saveEdit = (id) => {
-    reload(updateProduct(activecat, id, editForm));
-    setEditingId(null);
-    setEditForm(EMPTY_FORM);
+  const saveEdit = async (id) => {
+    try {
+      reload(await productService.updateProduct(activecat, id, editForm));
+      setEditingId(null);
+      setEditForm(EMPTY_FORM);
+    } catch (err) { console.error('Error guardando producto:', err); }
   };
 
-  const handleDelete = (id, nombre) => {
+  const handleDelete = async (id, nombre) => {
     if (!window.confirm(`¿Eliminar "${nombre}"? Esta acción no se puede deshacer.`)) return;
-    reload(deleteProduct(activecat, id));
+    try {
+      reload(await productService.deleteProduct(activecat, id));
+    } catch (err) { console.error('Error eliminando producto:', err); }
   };
 
-  const handleAdd = () => {
+  const handleAdd = async () => {
     if (!addForm.nombre.trim() || !addForm.precio) return;
-    reload(addProduct(activecat, addForm));
-    setAddForm(EMPTY_FORM);
-    setShowAddForm(false);
+    try {
+      reload(await productService.addProduct(activecat, addForm));
+      setAddForm(EMPTY_FORM);
+      setShowAddForm(false);
+    } catch (err) { console.error('Error agregando producto:', err); }
   };
 
-  const handleAddCategory = () => {
+  const handleAddCategory = async () => {
     const name = newCatName.trim();
     if (!name) return;
-    const updated = addCategory(name);
-    setProducts(updated);
-    setActivecat(name);
-    setNewCatName('');
-    setShowNewCat(false);
+    try {
+      const updated = await productService.addCategory(name);
+      setProducts(updated);
+      setActivecat(name);
+      setNewCatName('');
+      setShowNewCat(false);
+    } catch (err) { console.error('Error agregando categoría:', err); }
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     if (!window.confirm('¿Restaurar todos los productos a los valores originales? Se perderán todos los cambios.')) return;
-    const defaults = resetToDefaults();
-    setProducts(defaults);
-    setActivecat(Object.keys(defaults)[0]);
-    setEditingId(null);
-    setShowAddForm(false);
+    try {
+      const defaults = await productService.resetToDefaults();
+      setProducts(defaults);
+      setActivecat(Object.keys(defaults)[0]);
+      setEditingId(null);
+      setShowAddForm(false);
+    } catch (err) { console.error('Error restaurando productos:', err); }
   };
 
   /* ── render ──────────────────────────────────────────── */
