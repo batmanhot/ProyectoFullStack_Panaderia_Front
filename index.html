@@ -1,10 +1,73 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>panaderia</title>
+
+    <!-- SEO Primary -->
+    <title>Panadería La Jaujina | Pan Fresco, Pasteles y Delivery</title>
+    <meta name="description" content="Disfruta pan recién horneado, pasteles, empanadas y productos artesanales con delivery rápido. Calidad y tradición en cada producto. Pide por WhatsApp." />
+    <meta name="keywords" content="panadería, pan fresco, pasteles, empanadas, tortas, delivery, productos artesanales, La Jaujina, panadería artesanal, croissants, bocaditos, coffee break" />
+    <meta name="robots" content="index, follow" />
+    <meta name="author" content="Panadería La Jaujina" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Panadería La Jaujina | Pan Fresco y Delivery" />
+    <meta property="og:description" content="Pan recién horneado, pasteles y productos artesanales con delivery rápido. ¡Pide ahora por WhatsApp!" />
+    <meta property="og:image" content="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=1200" />
+    <meta property="og:locale" content="es_PE" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Panadería La Jaujina | Pan Fresco y Delivery" />
+    <meta name="twitter:description" content="Pan recién horneado, pasteles y productos artesanales. ¡Pide ahora por WhatsApp!" />
+    <meta name="twitter:image" content="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=1200" />
+
+    <!-- Schema.org LocalBusiness / Bakery -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Bakery",
+      "name": "Panadería La Jaujina",
+      "description": "Panadería artesanal con productos frescos diarios, pasteles, tortas y servicio de delivery.",
+      "telephone": "+51951655295",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Calle Principal 123",
+        "addressLocality": "La Jaujina",
+        "addressCountry": "PE"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"],
+          "opens": "06:00",
+          "closes": "19:00"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Sunday"],
+          "opens": "07:00",
+          "closes": "17:00"
+        }
+      ],
+      "servesCuisine": "Panadería y Pastelería Artesanal",
+      "priceRange": "S/",
+      "currenciesAccepted": "PEN",
+      "paymentAccepted": "Cash, Credit Card, Yape, Plin",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Productos de Panadería La Jaujina",
+        "itemListElement": [
+          { "@type": "OfferCatalog", "name": "Panadería" },
+          { "@type": "OfferCatalog", "name": "Pasteles y Tortas" },
+          { "@type": "OfferCatalog", "name": "Dulces Regionales" }
+        ]
+      }
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>

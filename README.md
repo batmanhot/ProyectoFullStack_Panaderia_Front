@@ -149,3 +149,18 @@ Este es un proyecto frontend moderno y funcional para una panadería tradicional
 ![alt text](image-1.png)
 ![alt text](image-2.png)
 ![alt text](image-3.png)
+
+### ** Recojo de Feedback de los usuarios y publicacion **
+
+¡Perfecto! 🎉 Excelente decisión publicar el proyecto para recoger feedback de los usuarios. Eso es fundamental para validar la idea y mejorar la experiencia.
+
+El frontend está muy bien estructurado y listo para producción. Cuando estén listos para construir el backend, tendrán una base sólida sobre la cual integrar:
+
+API de productos para gestionar dinámicamente el catálogo
+Gestión de pedidos y persistencia en BD
+Autenticación de usuarios/administradores
+Sistema de pagos (si lo requieren)
+Dashboard administrativo para gestionar productos y pedidos
+¡Mucho éxito con la publicación! Las opiniones de los usuarios serán invaluables para las siguientes iteraciones. Cualquier cosa que necesites en el futuro, aquí estaré.
+
+¡Que vaya excelente con Panadería La Jaujina!
