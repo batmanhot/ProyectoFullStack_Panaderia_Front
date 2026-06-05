@@ -38,16 +38,16 @@ const EventosEmpresas = ({ whatsappNumber }) => {
   };
 
   return (
-    <section id="eventos" className="py-20 px-6 bg-gradient-to-b from-gray-900 to-orange-950 text-white">
+    <section id="eventos" className="py-24 px-6 bg-linear-to-b from-[#1A0A02] to-[#2D1810] text-white">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <span className="inline-block bg-orange-500/20 text-orange-300 text-sm font-bold px-4 py-1 rounded-full mb-4 border border-orange-500/30 tracking-wide">
+          <span className="inline-block bg-[#D4A373]/15 text-[#D4A373] text-xs font-bold px-5 py-2 rounded-full mb-5 border border-[#D4A373]/25 tracking-widest uppercase">
             EMPRESAS Y EVENTOS
           </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold mb-3">
+          <h2 className="text-4xl md:text-5xl font-extrabold mb-4">
             Servicios para Empresas y Eventos
           </h2>
-          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+          <p className="text-white/55 text-lg max-w-2xl mx-auto leading-relaxed">
             Llevamos la calidad artesanal de La Jaujina a tus eventos corporativos, celebraciones y reuniones.
           </p>
         </div>
@@ -56,23 +56,25 @@ const EventosEmpresas = ({ whatsappNumber }) => {
           {servicios.map((s, i) => (
             <div
               key={i}
-              className="bg-white/5 border border-white/10 rounded-2xl p-7 hover:bg-white/10 transition-colors duration-300 flex flex-col"
+              className="bg-white/4 border border-white/8 rounded-2xl p-7
+                         hover:bg-white/8 hover:-translate-y-1
+                         transition-all duration-300 flex flex-col"
             >
-              <div className="bg-orange-500/20 p-3 rounded-xl w-fit mb-5">
-                <s.icono size={28} className="text-orange-400" />
+              <div className="bg-[#D4A373]/15 p-3 rounded-xl w-fit mb-5">
+                <s.icono size={28} className="text-[#D4A373]" />
               </div>
-              <h3 className="text-xl font-bold mb-2">{s.nombre}</h3>
-              <p className="text-gray-400 leading-relaxed text-sm">{s.desc}</p>
+              <h3 className="text-lg font-extrabold mb-2 text-white">{s.nombre}</h3>
+              <p className="text-white/45 leading-relaxed text-sm">{s.desc}</p>
             </div>
           ))}
 
-          {/* Card CTA dentro del grid */}
-          <div className="bg-orange-500/10 border-2 border-orange-500/30 rounded-2xl p-7 flex flex-col items-center justify-center text-center">
-            <p className="text-orange-300 font-semibold text-lg mb-3">¿Tienes un evento próximo?</p>
-            <p className="text-gray-400 text-sm mb-5">Solicita una cotización personalizada sin compromiso.</p>
+          {/* Card CTA */}
+          <div className="bg-[#D4A373]/8 border-2 border-[#D4A373]/25 rounded-2xl p-7 flex flex-col items-center justify-center text-center">
+            <p className="text-[#D4A373] font-bold text-lg mb-3">¿Tienes un evento próximo?</p>
+            <p className="text-white/45 text-sm mb-6">Solicita una cotización personalizada sin compromiso.</p>
             <button
               onClick={handleCotizar}
-              className="flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white font-bold px-6 py-3 rounded-xl transition-all"
+              className="flex items-center gap-2 bg-orange-500 hover:bg-orange-400 text-white font-bold px-6 py-3 rounded-xl transition-all hover:-translate-y-0.5 hover:shadow-lg"
             >
               <MessageCircle size={18} />
               Cotizar ahora
@@ -83,7 +85,7 @@ const EventosEmpresas = ({ whatsappNumber }) => {
         <div className="text-center">
           <button
             onClick={handleCotizar}
-            className="inline-flex items-center gap-3 bg-green-500 hover:bg-green-600 text-white font-bold px-10 py-4 rounded-full text-lg shadow-lg transition-all transform hover:scale-105 active:scale-95"
+            className="inline-flex items-center gap-3 bg-orange-500 hover:bg-orange-400 text-white font-extrabold px-12 py-4 rounded-full text-lg shadow-[0_8px_32px_rgba(234,88,12,0.4)] hover:shadow-[0_12px_40px_rgba(234,88,12,0.55)] transition-all duration-300 hover:-translate-y-0.5 active:scale-95"
           >
             <MessageCircle size={22} />
             Solicitar Cotización por WhatsApp

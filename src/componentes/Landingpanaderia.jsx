@@ -150,7 +150,7 @@ const LandingPanaderia = () => {
   }
 
   return (
-    <div className="min-h-screen bg-white font-sans text-gray-800 relative">
+    <div className="min-h-screen bg-[#FFF8F0] font-sans text-gray-800 relative">
 
       {/* WhatsApp flotante */}
       <WhatsAppButton whatsappNumber={whatsappNumber} defaultMessage={defaultMessage} />
@@ -235,12 +235,12 @@ const LandingPanaderia = () => {
 
       {/* Aviso de sesión requerida — visible solo si no hay sesión */}
       {!isLoggedIn && (
-        <div className="bg-orange-50 border-y border-orange-200 py-3 px-6 text-center">
-          <p className="text-orange-700 text-sm font-medium">
+        <div className="bg-amber-50 border-y border-[#D4A373]/30 py-3 px-6 text-center">
+          <p className="text-[#5A3E2B] text-sm font-medium">
             🔐 <strong>Inicia sesión</strong> para agregar productos al carrito y hacer seguimiento de tus pedidos.{' '}
             <button
               onClick={() => setShowCustomerLogin(true)}
-              className="underline font-bold hover:text-orange-900 transition"
+              className="underline font-bold hover:text-[#3D2010] transition"
             >
               Crear cuenta o ingresar →
             </button>

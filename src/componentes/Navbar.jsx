@@ -29,7 +29,7 @@ const Navbar = ({ cartLength, onCartClick, loggedInCustomer, onUserClick }) => {
     <nav className="flex justify-between items-center px-6 py-4 bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50">
       <button
         onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-        className="text-2xl font-bold text-orange-700 font-serif italic hover:text-orange-800 transition"
+        className="text-2xl font-bold text-[#5A3E2B] font-serif italic hover:text-[#3D2010] transition"
       >
         Panaderia la Jaujina
       </button>
@@ -40,7 +40,7 @@ const Navbar = ({ cartLength, onCartClick, loggedInCustomer, onUserClick }) => {
           <button
             key={item.id}
             onClick={() => handleNavClick(item.id)}
-            className="text-gray-700 hover:text-orange-700 font-medium transition text-sm"
+            className="text-gray-600 hover:text-[#5A3E2B] font-medium transition text-sm"
           >
             {item.label}
           </button>
@@ -125,7 +125,7 @@ const Navbar = ({ cartLength, onCartClick, loggedInCustomer, onUserClick }) => {
               <button
                 key={item.id}
                 onClick={() => handleNavClick(item.id)}
-                className="text-left text-gray-700 hover:text-orange-700 font-medium py-2.5 px-3 transition hover:bg-orange-50 rounded-lg"
+                className="text-left text-gray-600 hover:text-[#5A3E2B] font-medium py-2.5 px-3 transition hover:bg-amber-50 rounded-lg"
               >
                 {item.label}
               </button>

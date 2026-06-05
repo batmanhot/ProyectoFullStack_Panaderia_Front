@@ -54,16 +54,16 @@ const productosFavoritos = [
 
 const ProductosFavoritos = ({ onAddToCart, addingId, isLoggedIn }) => {
   return (
-    <section id="productos" className="py-20 px-6 bg-white">
+    <section id="productos" className="py-24 px-6 bg-[#FFF8F0]">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
-          <span className="inline-block bg-orange-100 text-orange-700 text-sm font-bold px-4 py-1 rounded-full mb-4 tracking-wide">
+          <span className="inline-block bg-amber-100 text-[#5A3E2B] text-xs font-bold px-5 py-2 rounded-full mb-5 tracking-widest uppercase">
             LOS MÁS PEDIDOS
           </span>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-orange-900 mb-3">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-[#5A3E2B] mb-4">
             Productos Favoritos
           </h2>
-          <p className="text-gray-500 text-lg max-w-xl mx-auto">
+          <p className="text-gray-500 text-lg max-w-xl mx-auto leading-relaxed">
             Nuestros clientes los adoran. Elaborados cada día con ingredientes frescos y mucho cariño.
           </p>
         </div>
@@ -75,17 +75,17 @@ const ProductosFavoritos = ({ onAddToCart, addingId, isLoggedIn }) => {
               product={prod}
               onAddToCart={onAddToCart}
               addingId={addingId}
-              priceColor="text-orange-600"
-              btnColor="bg-orange-700 hover:bg-orange-800"
+              priceColor="text-[#5A3E2B]"
+              btnColor="bg-[#5A3E2B] hover:bg-[#3D2010]"
               isLoggedIn={isLoggedIn}
             />
           ))}
         </div>
 
-        <div className="text-center mt-12">
+        <div className="text-center mt-14">
           <button
             onClick={() => document.getElementById('panaderia')?.scrollIntoView({ behavior: 'smooth' })}
-            className="border-2 border-orange-600 text-orange-600 hover:bg-orange-600 hover:text-white font-bold px-8 py-3 rounded-full transition-all duration-200"
+            className="border-2 border-[#5A3E2B] text-[#5A3E2B] hover:bg-[#5A3E2B] hover:text-white font-bold px-10 py-3.5 rounded-full transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
           >
             Ver Catálogo Completo
           </button>

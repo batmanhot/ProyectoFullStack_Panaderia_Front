@@ -1,65 +1,81 @@
 import React from 'react';
-import { MessageCircle, Zap, Leaf, Clock } from 'lucide-react';
+import { MessageCircle, ChefHat, Clock, Star, ShieldCheck } from 'lucide-react';
 
 const Hero = ({ onOrderClick, onCatalogClick }) => {
   return (
-    <header className="relative h-[75vh] flex items-center justify-center text-center text-white overflow-hidden">
-      <img 
-        src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=1600" 
-        alt="Pan recién horneado" className="absolute inset-0 w-full h-full object-cover brightness-40"
+    <header className="relative min-h-[88vh] flex items-center justify-center overflow-hidden">
+
+      {/* Imagen de fondo */}
+      <img
+        src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&q=80&w=1920"
+        alt="Pan artesanal La Jaujina"
+        className="absolute inset-0 w-full h-full object-cover"
       />
-      <div className="absolute inset-0 bg-gradient-to-r from-green-900/40 to-transparent"></div>
-      
-      <div className="relative z-10 px-4 max-w-4xl mx-auto">
-        {/* Título Principal */}
-        <h1 className="text-5xl md:text-7xl font-extrabold mb-4 animate-in slide-in-from-top duration-700 text-white drop-shadow-lg">
-          Pan recién horneado
+
+      {/* Overlay cálido multicapa */}
+      <div className="absolute inset-0 bg-linear-to-br from-[#2A1A0A]/92 via-[#5A3E2B]/72 to-[#D4A373]/25" />
+      <div className="absolute inset-0 bg-linear-to-t from-[#1A0D05]/65 via-transparent to-transparent" />
+
+      <div className="relative z-10 px-6 max-w-5xl mx-auto text-center py-24">
+
+        {/* Pre-badge */}
+        <div className="flex justify-center mb-8">
+          <span className="inline-flex items-center gap-2.5 bg-[#D4A373]/15 text-amber-200 border border-[#D4A373]/35 text-xs font-bold px-6 py-2.5 rounded-full tracking-widest uppercase backdrop-blur-sm">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D4A373] animate-pulse shrink-0" />
+            Horneado fresco cada mañana · Jauja
+          </span>
+        </div>
+
+        {/* Título principal */}
+        <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold mb-6 leading-[1.05] tracking-tight">
+          <span className="text-white drop-shadow-2xl">Pan artesanal con</span>
           <br />
-          <span className="text-green-200">todos los días</span>
+          <span className="text-[#D4A373] drop-shadow-2xl">el sabor que enamora</span>
         </h1>
-        
+
         {/* Subtítulo */}
-        <p className="text-lg md:text-xl mb-8 opacity-95 italic max-w-2xl mx-auto drop-shadow-md text-gray-100">
-          Disfruta panes, pasteles, empanadas y productos artesanales elaborados con ingredientes seleccionados y el sabor tradicional que nos caracteriza.
+        <p className="text-lg md:text-xl mb-10 max-w-2xl mx-auto leading-relaxed text-amber-50/80 font-light">
+          Elaborados con ingredientes seleccionados y recetas familiares que se transmiten de generación en generación.
+          Cada bocado, una experiencia única.
         </p>
 
-        {/* Botones CTA */}
-        <div className="flex flex-col md:flex-row gap-4 justify-center mb-12">
+        {/* CTAs */}
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
           <button
             onClick={onOrderClick}
-            className="px-8 py-4 bg-green-500 hover:bg-green-600 text-white font-bold rounded-full shadow-lg transform hover:scale-105 transition-all flex items-center justify-center gap-2 text-lg"
+            className="group relative inline-flex items-center justify-center gap-3 bg-orange-500 hover:bg-orange-400 text-white font-extrabold px-10 py-4 rounded-full shadow-[0_8px_32px_rgba(234,88,12,0.45)] hover:shadow-[0_12px_40px_rgba(234,88,12,0.6)] transition-all duration-300 hover:-translate-y-0.5 text-base overflow-hidden"
           >
-            <MessageCircle size={24} />
+            <MessageCircle size={22} />
             Pedir por WhatsApp
+            <span className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/8 transition-colors duration-300" />
           </button>
           <button
             onClick={onCatalogClick}
-            className="px-8 py-4 bg-white hover:bg-gray-100 text-green-700 font-bold rounded-full shadow-lg transform hover:scale-105 transition-all text-lg"
+            className="inline-flex items-center justify-center gap-2 bg-white/8 hover:bg-white/18 text-white font-bold px-10 py-4 rounded-full border border-white/25 backdrop-blur-sm transition-all duration-300 hover:-translate-y-0.5 text-base"
           >
             Ver Catálogo
           </button>
         </div>
 
-        {/* Indicadores Rápidos */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-3xl mx-auto mt-8 pt-8 border-t border-white/20">
-          <div className="flex flex-col items-center gap-2">
-            <Zap className="text-yellow-300" size={28} />
-            <p className="text-sm font-semibold drop-shadow">Horneado fresco diariamente</p>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <Clock className="text-blue-300" size={28} />
-            <p className="text-sm font-semibold drop-shadow">Delivery rápido</p>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <Leaf className="text-green-300" size={28} />
-            <p className="text-sm font-semibold drop-shadow">Productos artesanales</p>
-          </div>
-          <div className="flex flex-col items-center gap-2">
-            <MessageCircle className="text-pink-300" size={28} />
-            <p className="text-sm font-semibold drop-shadow">Atención personalizada</p>
-          </div>
+        {/* Indicadores */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-3xl mx-auto pt-8 border-t border-white/12">
+          {[
+            { Icon: ChefHat,    val: '+50 productos', label: 'Recetas artesanales' },
+            { Icon: Clock,      val: 'Mismo día',     label: 'Delivery rápido'     },
+            { Icon: Star,       val: '+10,000',       label: 'Clientes felices'    },
+            { Icon: ShieldCheck,val: '+5 años',       label: 'De tradición'        },
+          ].map(({ Icon, val, label }, i) => (
+            <div key={i} className="flex flex-col items-center gap-1.5 text-white/85">
+              <Icon size={22} className="text-[#D4A373]" />
+              <p className="font-extrabold text-sm">{val}</p>
+              <p className="text-xs text-white/55">{label}</p>
+            </div>
+          ))}
         </div>
       </div>
+
+      {/* Fade inferior hacia el fondo de la landing */}
+      <div className="absolute bottom-0 left-0 right-0 h-28 bg-linear-to-t from-[#FFF8F0] to-transparent pointer-events-none" />
     </header>
   );
 };

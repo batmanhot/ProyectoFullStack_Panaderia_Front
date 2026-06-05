@@ -1,5 +1,6 @@
 import React from 'react';
 import { MessageCircle, Clock, CheckCircle } from 'lucide-react';
+import FadeIn from './FadeIn';
 
 const CTAFinal = ({ whatsappNumber }) => {
   const handlePedir = () => {
@@ -10,43 +11,57 @@ const CTAFinal = ({ whatsappNumber }) => {
   };
 
   return (
-    <section className="relative py-24 px-6 overflow-hidden bg-gradient-to-br from-orange-600 via-amber-500 to-orange-700">
-      {/* Destellos decorativos */}
-      <div className="absolute top-10 left-10 w-72 h-72 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-10 right-10 w-56 h-56 bg-yellow-200/20 rounded-full blur-3xl pointer-events-none" />
+    <section className="relative py-28 px-6 overflow-hidden bg-linear-to-br from-[#2A1A0A] via-[#5A3E2B] to-[#3D2010]">
+      {/* Destellos cálidos */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-[#D4A373]/10 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-80 h-80 bg-amber-800/15 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[300px] bg-[#D4A373]/5 rounded-full blur-3xl pointer-events-none" />
 
-      <div className="relative max-w-3xl mx-auto text-center text-white">
-        <h2 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
-          ¿Listo para disfrutar productos recién horneados?
-        </h2>
-        <p className="text-white/90 text-xl mb-6 leading-relaxed">
-          Haz tu pedido ahora y recibe la calidad y frescura que distingue a La Jaujina.
-        </p>
+      <FadeIn>
+        <div className="relative max-w-3xl mx-auto text-center text-white">
+          {/* Badge */}
+          <span className="inline-block bg-[#D4A373]/20 text-amber-300 border border-[#D4A373]/30 text-xs font-bold px-5 py-2 rounded-full mb-8 tracking-widest uppercase">
+            ¿Listo para disfrutar?
+          </span>
 
-        <div className="flex flex-wrap items-center justify-center gap-4 text-white/85 mb-10 text-sm">
-          <span className="flex items-center gap-1.5">
-            <CheckCircle size={16} /> Delivery el mismo día
-          </span>
-          <span className="flex items-center gap-1.5">
-            <CheckCircle size={16} /> Pago por Yape o Plin
-          </span>
-          <span className="flex items-center gap-1.5">
-            <Clock size={16} /> Pedidos antes de las 6 PM
-          </span>
+          <h2 className="text-4xl md:text-6xl font-extrabold mb-6 leading-tight">
+            Productos recién horneados<br />
+            <span className="text-[#D4A373]">a tu puerta hoy</span>
+          </h2>
+
+          <p className="text-white/75 text-lg mb-8 leading-relaxed max-w-xl mx-auto">
+            Haz tu pedido ahora y recibe la calidad y frescura que distingue a La Jaujina.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-5 text-white/65 mb-12 text-sm">
+            <span className="flex items-center gap-1.5">
+              <CheckCircle size={15} className="text-[#D4A373]" /> Delivery el mismo día
+            </span>
+            <span className="flex items-center gap-1.5">
+              <CheckCircle size={15} className="text-[#D4A373]" /> Yape · Efectivo
+            </span>
+            <span className="flex items-center gap-1.5">
+              <Clock size={15} className="text-[#D4A373]" /> Pedidos antes de las 6 PM
+            </span>
+          </div>
+
+          <button
+            onClick={handlePedir}
+            className="group inline-flex items-center gap-3 bg-orange-500 hover:bg-orange-400
+                       text-white font-extrabold px-14 py-5 rounded-full text-xl
+                       shadow-[0_8px_40px_rgba(234,88,12,0.45)]
+                       hover:shadow-[0_14px_48px_rgba(234,88,12,0.6)]
+                       transition-all duration-300 hover:-translate-y-0.5 active:scale-95"
+          >
+            <MessageCircle size={26} />
+            PEDIR POR WHATSAPP
+          </button>
+
+          <p className="mt-6 text-white/40 text-xs">
+            Producción limitada diaria · Sin mínimo de pedido
+          </p>
         </div>
-
-        <button
-          onClick={handlePedir}
-          className="inline-flex items-center gap-3 bg-white text-orange-600 hover:bg-orange-50 font-extrabold px-12 py-5 rounded-full text-xl shadow-2xl transition-all transform hover:scale-105 active:scale-95"
-        >
-          <MessageCircle size={28} className="fill-green-500 text-green-500" />
-          PEDIR POR WHATSAPP
-        </button>
-
-        <p className="mt-6 text-white/60 text-xs">
-          Producción limitada diaria · Sin mínimo de pedido
-        </p>
-      </div>
+      </FadeIn>
     </section>
   );
 };
