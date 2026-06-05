@@ -1,5 +1,5 @@
 import React from 'react';
-import { MessageCircle, ChefHat, Clock, Star, ShieldCheck } from 'lucide-react';
+import { ShoppingCart, ChefHat, Clock, Star, ShieldCheck } from 'lucide-react';
 
 const Hero = ({ onOrderClick, onCatalogClick }) => {
   return (
@@ -39,14 +39,14 @@ const Hero = ({ onOrderClick, onCatalogClick }) => {
           Cada bocado, una experiencia única.
         </p>
 
-        {/* CTAs */}
+        {/* CTAs — compra directa al catálogo */}
         <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
           <button
             onClick={onOrderClick}
             className="group relative inline-flex items-center justify-center gap-3 bg-orange-500 hover:bg-orange-400 text-white font-extrabold px-10 py-4 rounded-full shadow-[0_8px_32px_rgba(234,88,12,0.45)] hover:shadow-[0_12px_40px_rgba(234,88,12,0.6)] transition-all duration-300 hover:-translate-y-0.5 text-base overflow-hidden"
           >
-            <MessageCircle size={22} />
-            Pedir por WhatsApp
+            <ShoppingCart size={22} />
+            Comprar Ahora
             <span className="absolute inset-0 rounded-full bg-white/0 group-hover:bg-white/8 transition-colors duration-300" />
           </button>
           <button
@@ -60,10 +60,10 @@ const Hero = ({ onOrderClick, onCatalogClick }) => {
         {/* Indicadores */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5 max-w-3xl mx-auto pt-8 border-t border-white/12">
           {[
-            { Icon: ChefHat,    val: '+50 productos', label: 'Recetas artesanales' },
-            { Icon: Clock,      val: 'Mismo día',     label: 'Delivery rápido'     },
-            { Icon: Star,       val: '+10,000',       label: 'Clientes felices'    },
-            { Icon: ShieldCheck,val: '+5 años',       label: 'De tradición'        },
+            { Icon: ChefHat,     val: '+50 productos', label: 'Recetas artesanales' },
+            { Icon: Clock,       val: 'Mismo día',     label: 'Delivery rápido'     },
+            { Icon: Star,        val: '+10,000',       label: 'Clientes felices'    },
+            { Icon: ShieldCheck, val: '+5 años',       label: 'De tradición'        },
           ].map(({ Icon, val, label }, i) => (
             <div key={i} className="flex flex-col items-center gap-1.5 text-white/85">
               <Icon size={22} className="text-[#D4A373]" />
@@ -74,7 +74,7 @@ const Hero = ({ onOrderClick, onCatalogClick }) => {
         </div>
       </div>
 
-      {/* Fade inferior hacia el fondo de la landing */}
+      {/* Fade inferior */}
       <div className="absolute bottom-0 left-0 right-0 h-28 bg-linear-to-t from-[#FFF8F0] to-transparent pointer-events-none" />
     </header>
   );

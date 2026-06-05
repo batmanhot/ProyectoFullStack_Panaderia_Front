@@ -17,6 +17,7 @@ import Footer from './Footer';
 import WhatsAppButton from './WhatsAppButton';
 import CartDrawer from './CartDrawer';
 import OrderTicket from './OrderTicket';
+import MobileCartBar from './MobileCartBar';
 import AdminLogin from './AdminLogin';
 import AdminPanel from './AdminPanel';
 import CustomerLogin from './CustomerLogin';
@@ -226,10 +227,7 @@ const LandingPanaderia = () => {
 
       {/* 1. Hero */}
       <Hero
-        onOrderClick={() => {
-          const msg = encodeURIComponent('¡Hola! Quiero hacer un pedido. ¿Qué productos tienen disponibles hoy?');
-          window.open(`https://wa.me/${whatsappNumber}?text=${msg}`, '_blank');
-        }}
+        onOrderClick={() => document.getElementById('panaderia')?.scrollIntoView({ behavior: 'smooth' })}
         onCatalogClick={() => document.getElementById('productos')?.scrollIntoView({ behavior: 'smooth' })}
       />
 
@@ -272,7 +270,13 @@ const LandingPanaderia = () => {
       {sec.beneficios && <BeneficiosSection />}
 
       {/* 6. Promociones */}
-      {sec.promociones && <PromocionesSection whatsappNumber={whatsappNumber} />}
+      {sec.promociones && (
+        <PromocionesSection
+          onAddToCart={addToCart}
+          addingId={addingId}
+          isLoggedIn={isLoggedIn}
+        />
+      )}
 
       {/* 7. Cómo Funciona */}
       {sec.comoFunciona && <ComoFunciona />}
@@ -305,6 +309,13 @@ const LandingPanaderia = () => {
       )}
 
       <Footer />
+
+      {/* Mobile floating cart bar */}
+      <MobileCartBar
+        cartLength={cart.reduce((a, b) => a + b.qty, 0)}
+        totalCart={totalCart}
+        onCartClick={() => setIsCartOpen(true)}
+      />
     </div>
   );
 };
